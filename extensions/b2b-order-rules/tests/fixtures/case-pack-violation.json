@@ -1,0 +1,44 @@
+{
+  "payload": {
+    "export": "cart-validations-generate-run",
+    "target": "cart.validations.generate.run",
+    "input": {
+      "buyerJourney": { "step": "CART_INTERACTION" },
+      "localization": { "language": { "isoCode": "EN" } },
+      "presentmentCurrencyRate": "1.0",
+      "cart": {
+        "cost": { "subtotalAmount": { "amount": "507.50", "currencyCode": "EUR" } },
+        "buyerIdentity": {
+          "purchasingCompany": {
+            "company": { "name": "Basecamp Outfitters", "authorizedBrands": { "jsonValue": ["Northpeak"] } },
+            "location": { "name": "Lyon", "minimumOrderAmount": { "value": "1500" } }
+          }
+        },
+        "lines": [
+          {
+            "quantity": 7,
+            "merchandise": {
+              "__typename": "ProductVariant",
+              "sku": "NP-ATP-ALU",
+              "product": { "title": "Alpine Trekking Poles", "vendor": "Northpeak", "casePack": { "value": "6" } }
+            }
+          }
+        ]
+      }
+    },
+    "output": {
+      "operations": [
+        {
+          "validationAdd": {
+            "errors": [
+              {
+                "message": "Alpine Trekking Poles is sold by cases of 6. Please order a multiple of 6.",
+                "target": "$.cart"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,49 @@
+# Shopify app configuration — https://shopify.dev/docs/apps/tools/cli/configuration
+# `shopify app config link` links this file to your own app (client_id).
+client_id = "8ce03299c57ecab5a12329b017f2100b"
+name = "B2B Wholesale Hub"
+application_url = "https://example.com"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
+include_config_on_deploy = true
+
+[access_scopes]
+# read/write_customers covers B2B companies, contacts and locations.
+# write_products covers catalogs, price lists and quantity rules.
+scopes = "read_customers,write_customers,read_orders,read_products,write_products,read_publications,write_publications"
+
+[auth]
+redirect_urls = ["https://example.com/api/auth"]
+
+# Storefront → app traffic (wholesale application form, quick order SKU lookup).
+# The request is signed by Shopify and verified with authenticate.public.appProxy.
+[app_proxy]
+url = "https://example.com/apps/wholesale"
+subpath = "wholesale"
+prefix = "apps"
+
+[webhooks]
+api_version = "2026-10"
+
+  [[webhooks.subscriptions]]
+  topics = ["app/uninstalled"]
+  uri = "/webhooks/app/uninstalled"
+
+  [[webhooks.subscriptions]]
+  topics = ["app/scopes_update"]
+  uri = "/webhooks/app/scopes_update"
+
+  # B2B orders (filtered in the handler) are exported to the ERP via the outbox.
+  # Requires "Protected customer data" access (Partner Dashboard → App → API access):
+  # uncomment once the access request is approved.
+  # [[webhooks.subscriptions]]
+  # topics = ["orders/create"]
+  # uri = "/webhooks/orders/create"
+
+  # GDPR / privacy compliance
+  [[webhooks.subscriptions]]
+  compliance_topics = ["customers/data_request", "customers/redact", "shop/redact"]
+  uri = "/webhooks/compliance"
+

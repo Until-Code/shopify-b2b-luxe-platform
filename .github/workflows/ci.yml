@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  app:
+    name: App — lint, types, GraphQL schema, tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx prisma generate
+      - run: npm run lint
+      - run: npm run typecheck
+      # Downloads the pinned Admin API schema and fails on any invalid query/mutation.
+      - run: npm run graphql-codegen
+      - run: npm run graphql:validate
+      - run: npm test
+
+  function:
+    name: Shopify Function — unit + WASM integration tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm --workspace extensions/b2b-order-rules run typegen
+      - run: npm run test:functions
+
+  extensions:
+    name: Theme check + checkout extension types
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run theme:check
+      - run: npx tsc -p extensions/b2b-checkout-details

@@ -1,0 +1,44 @@
+{
+  "payload": {
+    "export": "cart-validations-generate-run",
+    "target": "cart.validations.generate.run",
+    "input": {
+      "buyerJourney": { "step": "CHECKOUT_COMPLETION" },
+      "localization": { "language": { "isoCode": "FR" } },
+      "presentmentCurrencyRate": "1.0",
+      "cart": {
+        "cost": { "subtotalAmount": { "amount": "870.00", "currencyCode": "EUR" } },
+        "buyerIdentity": {
+          "purchasingCompany": {
+            "company": { "name": "Basecamp Outfitters", "authorizedBrands": { "jsonValue": ["Northpeak", "Trailborn"] } },
+            "location": { "name": "Lyon", "minimumOrderAmount": { "value": "1500" } }
+          }
+        },
+        "lines": [
+          {
+            "quantity": 12,
+            "merchandise": {
+              "__typename": "ProductVariant",
+              "sku": "NP-ATP-ALU",
+              "product": { "title": "Alpine Trekking Poles", "vendor": "Northpeak", "casePack": { "value": "6" } }
+            }
+          }
+        ]
+      }
+    },
+    "output": {
+      "operations": [
+        {
+          "validationAdd": {
+            "errors": [
+              {
+                "message": "Le minimum de commande pour Lyon est de 1500,00 EUR. Ajoutez 630,00 EUR pour valider la commande.",
+                "target": "$.cart"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

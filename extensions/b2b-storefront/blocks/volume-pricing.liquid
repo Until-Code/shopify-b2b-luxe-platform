@@ -1,0 +1,86 @@
+{%- comment -%}
+  Trade pricing on the product page for B2B buyers: B2B unit price, MSRP
+  (compare-at price of the B2B price list), quantity rule and volume price
+  breaks, as published by the ERP price sync.
+{%- endcomment -%}
+{%- assign product = block.settings.product | default: product -%}
+{%- if customer.b2b? and product -%}
+  <div class="b2b b2b-volume-pricing" data-b2b-volume-pricing>
+    <h3 class="b2b__subheading">{{ 'volume_pricing.heading' | t }}</h3>
+
+    {%- for variant in product.variants -%}
+      {%- assign rule = variant.quantity_rule -%}
+      <div
+        class="b2b-volume-pricing__variant"
+        data-variant-id="{{ variant.id }}"
+        {% unless variant.id == product.selected_or_first_available_variant.id %}hidden{% endunless %}
+      >
+        <table class="b2b__table">
+          <tbody>
+            <tr>
+              <th scope="row">
+                {%- if rule.min > 1 -%}
+                  {{ 'volume_pricing.from_quantity' | t: quantity: rule.min }}
+                {%- else -%}
+                  {{ 'volume_pricing.unit_price' | t }}
+                {%- endif -%}
+              </th>
+              <td class="b2b__num">{{ variant.price | money }}</td>
+            </tr>
+            {%- for price_break in variant.quantity_price_breaks -%}
+              <tr>
+                <th scope="row">{{ 'volume_pricing.from_quantity' | t: quantity: price_break.minimum_quantity }}</th>
+                <td class="b2b__num">{{ price_break.price | money }}</td>
+              </tr>
+            {%- endfor -%}
+            {%- if variant.compare_at_price > variant.price -%}
+              <tr class="b2b__muted">
+                <th scope="row">{{ 'volume_pricing.msrp' | t }}</th>
+                <td class="b2b__num">{{ variant.compare_at_price | money }}</td>
+              </tr>
+            {%- endif -%}
+          </tbody>
+        </table>
+        {%- if rule.increment > 1 or rule.min > 1 -%}
+          <p class="b2b__muted">
+            {{ 'volume_pricing.rules' | t: minimum: rule.min, increment: rule.increment }}
+            {%- if rule.max %} · {{ 'volume_pricing.maximum' | t: maximum: rule.max }}{% endif -%}
+          </p>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+
+  <script>
+    (() => {
+      // Follow the theme's variant picker: it updates the form's hidden `id` input
+      // and the ?variant= URL parameter.
+      const root = document.currentScript.previousElementSibling;
+      const show = (id) => {
+        if (!id) return;
+        root.querySelectorAll('[data-variant-id]').forEach((el) => {
+          el.hidden = el.dataset.variantId !== String(id);
+        });
+      };
+      document.addEventListener('change', (event) => {
+        if (event.target.matches('form[action*="/cart/add"] [name="id"]')) show(event.target.value);
+      });
+      addEventListener('popstate', () => show(new URL(location.href).searchParams.get('variant')));
+      document.querySelectorAll('form[action*="/cart/add"] [name="id"]').forEach((input) => {
+        new MutationObserver(() => show(input.value)).observe(input, { attributes: true, attributeFilter: ['value'] });
+      });
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "B2B trade pricing",
+  "target": "section",
+  "stylesheet": "b2b.css",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product", "autofill": true }
+  ]
+}
+{% endschema %}

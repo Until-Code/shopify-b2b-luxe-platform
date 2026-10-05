@@ -1,0 +1,7 @@
+{
+  "heading": "Order details for {{company}}",
+  "deliveryDate": "Requested delivery date",
+  "deliveryDateHelp": "Our logistics team confirms the date when the order is processed.",
+  "costCenter": "Cost center / internal reference",
+  "notEditable": "Order details can't be changed for this checkout."
+}

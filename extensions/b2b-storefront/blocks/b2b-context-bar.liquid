@@ -1,0 +1,32 @@
+{%- comment -%}
+  App embed: reminds B2B buyers which company location they are ordering for
+  (prices, catalog and payment terms depend on it).
+{%- endcomment -%}
+{%- if customer.b2b? and customer.current_company -%}
+  <div class="b2b-context-bar" style="--b2b-bar-bg: {{ block.settings.background }}; --b2b-bar-fg: {{ block.settings.text_color }};">
+    <span>
+      {{- 'context_bar.buying_for' | t: company: customer.current_company.name, location: customer.current_location.name -}}
+    </span>
+    <span class="b2b-context-bar__links">
+      {%- if customer.company_available_locations_count > 1 -%}
+        <a href="{{ routes.account_url }}">{{ 'context_bar.switch' | t }}</a>
+      {%- endif -%}
+      {%- if block.settings.quick_order_url != blank -%}
+        <a href="{{ block.settings.quick_order_url }}">{{ 'context_bar.quick_order' | t }}</a>
+      {%- endif -%}
+    </span>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "B2B context bar",
+  "target": "body",
+  "stylesheet": "b2b.css",
+  "settings": [
+    { "type": "url", "id": "quick_order_url", "label": "Quick order page" },
+    { "type": "color", "id": "background", "label": "Background", "default": "#111111" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#f5f1ea" }
+  ]
+}
+{% endschema %}

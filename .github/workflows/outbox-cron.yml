@@ -1,0 +1,19 @@
+name: ERP outbox delivery
+
+# Delivers pending B2B orders to the ERP every 10 minutes.
+# Requires the APP_URL and JOBS_SECRET repository secrets.
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  deliver:
+    runs-on: ubuntu-latest
+    if: ${{ vars.OUTBOX_CRON_ENABLED == 'true' }}
+    steps:
+      - name: Trigger outbox processing
+        run: |
+          curl --fail-with-body --silent --show-error -X POST \
+            -H "Authorization: Bearer ${{ secrets.JOBS_SECRET }}" \
+            "${{ secrets.APP_URL }}/api/jobs/outbox"

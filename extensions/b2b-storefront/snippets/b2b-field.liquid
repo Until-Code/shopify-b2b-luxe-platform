@@ -1,0 +1,16 @@
+{%- comment -%}
+  Accepts: name, label (translation key), type, required, autocomplete, placeholder, wide
+{%- endcomment -%}
+{%- assign field_id = 'b2b-' | append: name -%}
+<div class="b2b__field{% if wide %} b2b__field--wide{% endif %}">
+  <label for="{{ field_id }}">{{ label | t }}{% if required %} *{% endif %}</label>
+  <input
+    id="{{ field_id }}"
+    name="{{ name }}"
+    type="{{ type | default: 'text' }}"
+    {% if autocomplete %}autocomplete="{{ autocomplete }}"{% endif %}
+    {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+    {% if required %}required{% endif %}
+  >
+  <p class="b2b__error" data-error-for="{{ name }}"></p>
+</div>

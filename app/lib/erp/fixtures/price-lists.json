@@ -1,0 +1,34 @@
+{
+  "EU-WHOLESALE-EUR": {
+    "code": "EU-WHOLESALE-EUR",
+    "currency": "EUR",
+    "validFrom": "2026-09-01",
+    "records": [
+      { "sku": "NP-RDG-28", "unitPrice": "64.50", "retailPrice": "129.00", "minQuantity": 4, "increment": 4, "tiers": [ { "minQuantity": 16, "unitPrice": "61.50" }, { "minQuantity": 32, "unitPrice": "58.00" } ] },
+      { "sku": "NP-RDG-40", "unitPrice": "79.50", "retailPrice": "159.00", "minQuantity": 4, "increment": 4, "tiers": [ { "minQuantity": 16, "unitPrice": "75.50" } ] },
+      { "sku": "NP-ATP-ALU", "unitPrice": "44.50", "retailPrice": "89.00", "minQuantity": 6, "increment": 6, "tiers": [ { "minQuantity": 24, "unitPrice": "42.30" } ] },
+      { "sku": "NP-ATP-CRB", "unitPrice": "69.50", "retailPrice": "139.00", "minQuantity": 6, "increment": 6 },
+      { "sku": "NP-BC2P", "unitPrice": "149.50", "retailPrice": "299.00", "minQuantity": 2, "increment": 2, "tiers": [ { "minQuantity": 10, "unitPrice": "142.00" } ] },
+      { "sku": "TB-MBL-M", "unitPrice": "39.50", "retailPrice": "79.00", "minQuantity": 6, "increment": 6, "maxQuantity": 120 },
+      { "sku": "TB-TRS-42", "unitPrice": "69.50", "retailPrice": "139.00", "minQuantity": 6, "increment": 6 },
+      { "sku": "TB-STK-SET", "unitPrice": "29.50", "retailPrice": "59.00", "minQuantity": 3, "increment": 3 },
+      { "sku": "NP-DISCONTINUED-01", "unitPrice": "10.00", "minQuantity": 1, "increment": 1 },
+      { "sku": "TB-BAD-RECORD", "unitPrice": "20.00", "minQuantity": 5, "increment": 3 }
+    ]
+  },
+  "US-WHOLESALE-USD": {
+    "code": "US-WHOLESALE-USD",
+    "currency": "USD",
+    "validFrom": "2026-09-01",
+    "records": [
+      { "sku": "NP-RDG-28", "unitPrice": "72.00", "retailPrice": "145.00", "minQuantity": 4, "increment": 4, "tiers": [ { "minQuantity": 16, "unitPrice": "68.50" } ] },
+      { "sku": "NP-RDG-40", "unitPrice": "89.00", "retailPrice": "179.00", "minQuantity": 4, "increment": 4 },
+      { "sku": "NP-ATP-ALU", "unitPrice": "49.50", "retailPrice": "99.00", "minQuantity": 6, "increment": 6 },
+      { "sku": "NP-ATP-CRB", "unitPrice": "77.50", "retailPrice": "155.00", "minQuantity": 6, "increment": 6 },
+      { "sku": "NP-BC2P", "unitPrice": "165.00", "retailPrice": "329.00", "minQuantity": 2, "increment": 2 },
+      { "sku": "TB-MBL-M", "unitPrice": "44.00", "retailPrice": "89.00", "minQuantity": 6, "increment": 6 },
+      { "sku": "TB-TRS-42", "unitPrice": "77.50", "retailPrice": "155.00", "minQuantity": 6, "increment": 6 },
+      { "sku": "TB-STK-SET", "unitPrice": "32.50", "retailPrice": "65.00", "minQuantity": 3, "increment": 3 }
+    ]
+  }
+}

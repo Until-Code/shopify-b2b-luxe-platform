@@ -1,0 +1,63 @@
+{
+  "quick_order": {
+    "heading": "Commande rapide",
+    "intro": "Saisissez les références et quantités, ou collez-les depuis un tableur.",
+    "sku": "Référence",
+    "quantity": "Quantité",
+    "product": "Produit",
+    "add_row": "Ajouter une ligne",
+    "paste_label": "Coller des lignes (référence, quantité)",
+    "paste_apply": "Importer",
+    "check": "Vérifier",
+    "add_to_cart": "Ajouter au panier",
+    "remove": "Supprimer",
+    "not_found": "Référence inconnue",
+    "unavailable": "Indisponible",
+    "added": "Produits ajoutés au panier.",
+    "view_cart": "Voir le panier",
+    "sign_in": "Connectez-vous avec votre compte professionnel pour utiliser la commande rapide.",
+    "error": "Une erreur est survenue. Merci de réessayer.",
+    "log_in": "Se connecter"
+  },
+  "volume_pricing": {
+    "heading": "Tarifs professionnels",
+    "msrp": "Prix public conseillé",
+    "unit_price": "Prix unitaire",
+    "from_quantity": "À partir de {{ quantity }} unités",
+    "rules": "Minimum {{ minimum }} · vendu par {{ increment }}",
+    "maximum": "Maximum {{ maximum }} par commande"
+  },
+  "application": {
+    "heading": "Devenir revendeur",
+    "intro": "Nos marques sont distribuées par un réseau de revendeurs agréés. Présentez-nous votre activité.",
+    "company": "Raison sociale",
+    "vat": "Numéro de TVA",
+    "segment": "Type d'activité",
+    "segments": {
+      "specialty_store": "Magasin spécialisé outdoor",
+      "sporting_goods_chain": "Chaîne d'articles de sport",
+      "online_retailer": "Site e-commerce",
+      "rental_guiding": "Location & guides",
+      "distributor": "Distributeur"
+    },
+    "website": "Site web",
+    "first_name": "Prénom",
+    "last_name": "Nom",
+    "email": "E-mail professionnel",
+    "phone": "Téléphone",
+    "address": "Adresse",
+    "city": "Ville",
+    "zip": "Code postal",
+    "country": "Pays",
+    "message": "Parlez-nous de votre clientèle",
+    "terms": "J'accepte d'être contacté au sujet de cette demande et la politique de confidentialité.",
+    "submit": "Envoyer la demande",
+    "success": "Merci. Notre équipe commerciale étudiera votre demande sous 5 jours ouvrés.",
+    "error": "Merci de vérifier les champs signalés."
+  },
+  "context_bar": {
+    "buying_for": "Commande pour {{ company }} · {{ location }}",
+    "switch": "Changer de site",
+    "quick_order": "Commande rapide"
+  }
+}

@@ -1,0 +1,126 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Note that some adapters may set a maximum length for the String type by default, please ensure your strings are long
+// enough when changing adapters.
+// See https://www.prisma.io/docs/orm/reference/prisma-schema-reference#string for more information
+datasource db {
+  provider = "sqlite"
+  url      = "file:dev.sqlite"
+}
+
+model Session {
+  id            String    @id
+  shop          String
+  state         String
+  isOnline      Boolean   @default(false)
+  scope         String?
+  expires       DateTime?
+  accessToken   String
+  userId        BigInt?
+  firstName     String?
+  lastName      String?
+  email         String?
+  accountOwner  Boolean   @default(false)
+  locale        String?
+  collaborator  Boolean?  @default(false)
+  emailVerified Boolean?  @default(false)
+  refreshToken        String?
+  refreshTokenExpires DateTime?
+}
+
+// ---------------------------------------------------------------------------
+// B2B domain
+// SQLite has no native enums: allowed values are documented next to each field
+// and enforced in app/lib (see app/lib/b2b/*.ts).
+// ---------------------------------------------------------------------------
+
+/// A trade account request submitted from the storefront (app proxy).
+model WholesaleApplication {
+  id               String    @id @default(cuid())
+  shop             String
+  /// PENDING | APPROVED | REJECTED
+  status           String    @default("PENDING")
+  companyName      String
+  vatNumber        String?
+  /// specialty_store | sporting_goods_chain | online_retailer | rental_guiding | distributor
+  segment          String
+  website          String?
+  contactFirstName String
+  contactLastName  String
+  email            String
+  phone            String?
+  address1         String
+  city             String
+  zip              String
+  /// ISO 3166-1 alpha-2
+  countryCode      String
+  locale           String    @default("en")
+  message          String?
+  shopifyCompanyId String?
+  rejectionReason  String?
+  reviewedBy       String?
+  reviewedAt       DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@unique([shop, email])
+  @@index([shop, status])
+}
+
+/// One execution of an ERP -> Shopify synchronisation.
+model SyncJob {
+  id          String    @id @default(cuid())
+  shop        String
+  /// PRICE_LIST
+  type        String
+  /// RUNNING | SUCCEEDED | PARTIAL | FAILED
+  status      String    @default("RUNNING")
+  /// Human readable source reference, e.g. the ERP price list code.
+  source      String
+  /// Shopify GID of the target resource (price list).
+  target      String
+  /// JSON encoded SyncStats
+  stats       String?
+  error       String?
+  startedAt   DateTime  @default(now())
+  finishedAt  DateTime?
+
+  @@index([shop, startedAt])
+}
+
+/// Transactional outbox: events that must reach the ERP at least once.
+model OutboxEvent {
+  id            String   @id @default(cuid())
+  shop          String
+  /// e.g. order.export
+  topic         String
+  /// Business key used for idempotency (e.g. the Shopify order GID).
+  aggregateId   String
+  /// JSON encoded payload sent to the ERP.
+  payload       String
+  /// PENDING | SENT | DEAD
+  status        String   @default("PENDING")
+  attempts      Int      @default(0)
+  nextAttemptAt DateTime @default(now())
+  lastError     String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([shop, topic, aggregateId])
+  @@index([status, nextAttemptAt])
+}
+
+/// Shopify delivers webhooks at least once: we remember what we processed.
+model ProcessedWebhook {
+  webhookId   String   @id
+  shop        String
+  topic       String
+  processedAt DateTime @default(now())
+
+  @@index([shop, processedAt])
+}

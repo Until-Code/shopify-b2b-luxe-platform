@@ -1,0 +1,7 @@
+{
+  "heading": "Informations de commande pour {{company}}",
+  "deliveryDate": "Date de livraison souhaitée",
+  "deliveryDateHelp": "Notre équipe logistique confirme la date lors du traitement de la commande.",
+  "costCenter": "Centre de coût / référence interne",
+  "notEditable": "Les informations de commande ne peuvent pas être modifiées pour ce paiement."
+}

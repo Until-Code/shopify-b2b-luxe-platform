@@ -1,0 +1,63 @@
+{
+  "quick_order": {
+    "heading": "Quick order",
+    "intro": "Enter SKUs and quantities, or paste them from a spreadsheet.",
+    "sku": "SKU",
+    "quantity": "Quantity",
+    "product": "Product",
+    "add_row": "Add a line",
+    "paste_label": "Paste lines (SKU, quantity)",
+    "paste_apply": "Import",
+    "check": "Check availability",
+    "add_to_cart": "Add to cart",
+    "remove": "Remove",
+    "not_found": "Unknown SKU",
+    "unavailable": "Unavailable",
+    "added": "Products added to your cart.",
+    "view_cart": "View cart",
+    "sign_in": "Sign in with your trade account to use quick order.",
+    "error": "Something went wrong. Please try again.",
+    "log_in": "Log in"
+  },
+  "volume_pricing": {
+    "heading": "Trade pricing",
+    "msrp": "MSRP",
+    "unit_price": "Unit price",
+    "from_quantity": "From {{ quantity }} units",
+    "rules": "Minimum {{ minimum }} · sold by {{ increment }}",
+    "maximum": "Maximum {{ maximum }} per order"
+  },
+  "application": {
+    "heading": "Become a stockist",
+    "intro": "Our brands are sold through a network of authorized retailers. Tell us about your business.",
+    "company": "Company name",
+    "vat": "VAT number",
+    "segment": "Type of business",
+    "segments": {
+      "specialty_store": "Specialty outdoor store",
+      "sporting_goods_chain": "Sporting goods chain",
+      "online_retailer": "Online retailer",
+      "rental_guiding": "Rental & guiding",
+      "distributor": "Distributor"
+    },
+    "website": "Website",
+    "first_name": "First name",
+    "last_name": "Last name",
+    "email": "Professional email",
+    "phone": "Phone",
+    "address": "Address",
+    "city": "City",
+    "zip": "Postal code",
+    "country": "Country",
+    "message": "Tell us about your customers",
+    "terms": "I agree to be contacted about this application and accept the privacy policy.",
+    "submit": "Submit application",
+    "success": "Thank you. Our trade team will review your application within 5 business days.",
+    "error": "Please check the highlighted fields."
+  },
+  "context_bar": {
+    "buying_for": "Ordering for {{ company }} · {{ location }}",
+    "switch": "Change location",
+    "quick_order": "Quick order"
+  }
+}

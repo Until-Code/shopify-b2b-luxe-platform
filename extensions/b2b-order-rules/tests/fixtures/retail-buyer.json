@@ -1,0 +1,26 @@
+{
+  "payload": {
+    "export": "cart-validations-generate-run",
+    "target": "cart.validations.generate.run",
+    "input": {
+      "buyerJourney": { "step": "CHECKOUT_COMPLETION" },
+      "localization": { "language": { "isoCode": "FR" } },
+      "presentmentCurrencyRate": "1.0",
+      "cart": {
+        "cost": { "subtotalAmount": { "amount": "145.00", "currencyCode": "EUR" } },
+        "buyerIdentity": { "purchasingCompany": null },
+        "lines": [
+          {
+            "quantity": 1,
+            "merchandise": {
+              "__typename": "ProductVariant",
+              "sku": "NP-ATP-ALU",
+              "product": { "title": "Alpine Trekking Poles", "vendor": "Northpeak", "casePack": { "value": "6" } }
+            }
+          }
+        ]
+      }
+    },
+    "output": { "operations": [ { "validationAdd": { "errors": [] } } ] }
+  }
+}

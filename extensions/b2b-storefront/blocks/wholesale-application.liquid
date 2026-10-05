@@ -1,0 +1,87 @@
+{%- comment -%}
+  Trade account application. Posted to the app proxy (/apps/wholesale), which
+  verifies Shopify's HMAC signature, validates the payload and stores it for
+  review in the app (Trade applications).
+{%- endcomment -%}
+<div class="b2b b2b-application">
+  <h2 class="b2b__heading">{{ 'application.heading' | t }}</h2>
+  <p class="b2b__muted">{{ 'application.intro' | t }}</p>
+
+  <form
+    class="b2b__form"
+    action="/apps/wholesale"
+    method="post"
+    novalidate
+    data-b2b-application
+    data-error-message="{{ 'application.error' | t | escape }}"
+  >
+    <input type="hidden" name="locale" value="{% if request.locale.iso_code == 'fr' %}fr{% else %}en{% endif %}">
+    <div class="b2b__honeypot" aria-hidden="true">
+      <label>Nickname <input type="text" name="nickname" tabindex="-1" autocomplete="off"></label>
+    </div>
+
+    <div class="b2b__grid">
+      {%- render 'b2b-field', name: 'companyName', label: 'application.company', required: true, autocomplete: 'organization' -%}
+      {%- render 'b2b-field', name: 'vatNumber', label: 'application.vat' -%}
+
+      <div class="b2b__field">
+        <label for="b2b-segment">{{ 'application.segment' | t }} *</label>
+        <select id="b2b-segment" name="segment" required>
+          {%- assign segments = 'specialty_store,sporting_goods_chain,online_retailer,rental_guiding,distributor' | split: ',' -%}
+          {%- for segment in segments -%}
+            {%- assign segment_key = 'application.segments.' | append: segment -%}
+            <option value="{{ segment }}">{{ segment_key | t }}</option>
+          {%- endfor -%}
+        </select>
+        <p class="b2b__error" data-error-for="segment"></p>
+      </div>
+      {%- render 'b2b-field', name: 'website', label: 'application.website', type: 'url', placeholder: 'https://' -%}
+
+      {%- render 'b2b-field', name: 'contactFirstName', label: 'application.first_name', required: true, autocomplete: 'given-name' -%}
+      {%- render 'b2b-field', name: 'contactLastName', label: 'application.last_name', required: true, autocomplete: 'family-name' -%}
+      {%- render 'b2b-field', name: 'email', label: 'application.email', type: 'email', required: true, autocomplete: 'email' -%}
+      {%- render 'b2b-field', name: 'phone', label: 'application.phone', type: 'tel', autocomplete: 'tel' -%}
+
+      {%- render 'b2b-field', name: 'address1', label: 'application.address', required: true, autocomplete: 'address-line1', wide: true -%}
+      {%- render 'b2b-field', name: 'city', label: 'application.city', required: true, autocomplete: 'address-level2' -%}
+      {%- render 'b2b-field', name: 'zip', label: 'application.zip', required: true, autocomplete: 'postal-code' -%}
+
+      <div class="b2b__field">
+        <label for="b2b-country">{{ 'application.country' | t }} *</label>
+        <select id="b2b-country" name="countryCode" required autocomplete="country">
+          {%- for country in localization.available_countries -%}
+            <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>
+              {{- country.name -}}
+            </option>
+          {%- endfor -%}
+        </select>
+        <p class="b2b__error" data-error-for="countryCode"></p>
+      </div>
+
+      <div class="b2b__field b2b__field--wide">
+        <label for="b2b-message">{{ 'application.message' | t }}</label>
+        <textarea id="b2b-message" name="message" rows="4" maxlength="2000"></textarea>
+        <p class="b2b__error" data-error-for="message"></p>
+      </div>
+
+      <div class="b2b__field b2b__field--wide b2b__field--checkbox">
+        <label><input type="checkbox" name="acceptsTerms" required> {{ 'application.terms' | t }}</label>
+        <p class="b2b__error" data-error-for="acceptsTerms"></p>
+      </div>
+    </div>
+
+    <button type="submit" class="b2b__button">{{ 'application.submit' | t }}</button>
+    <p class="b2b__status" role="status" aria-live="polite" data-status></p>
+    <p class="b2b__success" hidden data-success>{{ 'application.success' | t }}</p>
+  </form>
+</div>
+
+{% schema %}
+{
+  "name": "Wholesale application",
+  "target": "section",
+  "stylesheet": "b2b.css",
+  "javascript": "wholesale-application.js",
+  "settings": []
+}
+{% endschema %}

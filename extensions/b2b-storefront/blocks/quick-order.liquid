@@ -1,0 +1,67 @@
+{%- comment -%}
+  Quick order by SKU for B2B buyers. SKUs are resolved through the app proxy
+  (/apps/wholesale), then added with the Ajax Cart API: the cart applies the
+  buyer's contextual B2B prices, quantity rules and volume price breaks.
+{%- endcomment -%}
+<div class="b2b b2b-quick-order" style="--b2b-accent: {{ block.settings.accent_color }};">
+  {%- assign heading = block.settings.heading | default: '' -%}
+  <h2 class="b2b__heading">{% if heading != blank %}{{ heading }}{% else %}{{ 'quick_order.heading' | t }}{% endif %}</h2>
+
+  {%- if customer.b2b? -%}
+    <p class="b2b__muted">{{ 'quick_order.intro' | t }}</p>
+
+    <b2b-quick-order
+      data-proxy-url="/apps/wholesale"
+      data-cart-url="{{ routes.cart_url }}"
+      data-cart-add-url="{{ routes.cart_add_url }}.js"
+      data-rows="{{ block.settings.initial_rows }}"
+      data-i18n='{{ 'quick_order' | t | json | escape }}'
+    >
+      <table class="b2b__table">
+        <thead>
+          <tr>
+            <th scope="col">{{ 'quick_order.sku' | t }}</th>
+            <th scope="col">{{ 'quick_order.product' | t }}</th>
+            <th scope="col" class="b2b__num">{{ 'quick_order.quantity' | t }}</th>
+            <th scope="col"><span class="visually-hidden">{{ 'quick_order.remove' | t }}</span></th>
+          </tr>
+        </thead>
+        <tbody data-rows></tbody>
+      </table>
+
+      <div class="b2b__actions">
+        <button type="button" class="b2b__button b2b__button--secondary" data-add-row>
+          {{ 'quick_order.add_row' | t }}
+        </button>
+        <button type="button" class="b2b__button" data-submit>{{ 'quick_order.add_to_cart' | t }}</button>
+      </div>
+
+      <details class="b2b__paste">
+        <summary>{{ 'quick_order.paste_label' | t }}</summary>
+        <textarea rows="5" data-paste placeholder="NP-RDG-28, 8&#10;TB-MBL-M, 12"></textarea>
+        <button type="button" class="b2b__button b2b__button--secondary" data-paste-apply>
+          {{ 'quick_order.paste_apply' | t }}
+        </button>
+      </details>
+
+      <p class="b2b__status" role="status" aria-live="polite" data-status></p>
+    </b2b-quick-order>
+  {%- else -%}
+    <p class="b2b__muted">{{ 'quick_order.sign_in' | t }}</p>
+    <a class="b2b__button" href="{{ routes.account_login_url }}">{{ 'quick_order.log_in' | t }}</a>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "B2B quick order",
+  "target": "section",
+  "stylesheet": "b2b.css",
+  "javascript": "quick-order.js",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading" },
+    { "type": "range", "id": "initial_rows", "label": "Empty lines", "min": 1, "max": 20, "step": 1, "default": 5 },
+    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#1a1a1a" }
+  ]
+}
+{% endschema %}

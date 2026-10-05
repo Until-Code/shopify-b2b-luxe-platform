@@ -1,0 +1,17 @@
+api_version = "2026-07"
+
+[[extensions]]
+name = "B2B checkout details"
+handle = "b2b-checkout-details"
+uid = "cd10a334-3b81-7bfa-f6b5-005b70008487bfae8461"
+type = "ui_extension"
+
+# Rendered in a block the merchant places with the checkout editor
+# (recommended: after the shipping method).
+[[extensions.targeting]]
+module = "./src/Checkout.tsx"
+target = "purchase.checkout.block.render"
+
+[extensions.capabilities]
+api_access = false
+network_access = false

@@ -1,0 +1,149 @@
+/* Scoped styles for the B2B theme app extension. Inherits the theme's fonts and colors. */
+.b2b {
+  --b2b-accent: currentColor;
+  --b2b-border: rgb(var(--color-foreground, 18 18 18) / 0.15);
+  --b2b-muted: rgb(var(--color-foreground, 18 18 18) / 0.65);
+  --b2b-error: #b42318;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-block: 2rem;
+}
+
+.b2b__heading {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  letter-spacing: 0.04em;
+  margin-block: 0 0.5rem;
+}
+
+.b2b__subheading {
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-block: 1.5rem 0.5rem;
+}
+
+.b2b__muted { color: var(--b2b-muted); }
+
+.b2b__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-block: 1rem;
+}
+
+.b2b__table th,
+.b2b__table td {
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid var(--b2b-border);
+  text-align: start;
+  font-weight: normal;
+}
+
+.b2b__table thead th {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--b2b-muted);
+}
+
+.b2b__num { text-align: end !important; font-variant-numeric: tabular-nums; }
+
+.b2b input:not([type="checkbox"]),
+.b2b select,
+.b2b textarea {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--b2b-border);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  border-radius: 0;
+}
+
+.b2b input[type="number"] { max-width: 7rem; text-align: end; }
+
+.b2b [aria-invalid="true"],
+.b2b__row--invalid input[name="sku"] { border-color: var(--b2b-error); }
+
+.b2b__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: flex-end; }
+
+.b2b__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0 1.75rem;
+  border: 1px solid var(--b2b-accent);
+  background: var(--b2b-accent);
+  color: #fff;
+  font: inherit;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.b2b__button:hover { opacity: 0.85; }
+.b2b__button:disabled { opacity: 0.5; cursor: progress; }
+.b2b__button--secondary { background: transparent; color: var(--b2b-accent); }
+
+.b2b__icon-button {
+  border: 0;
+  background: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: var(--b2b-muted);
+}
+
+.b2b__paste { margin-block: 1.5rem; }
+.b2b__paste summary { cursor: pointer; }
+.b2b__paste textarea { margin-block: 0.75rem; font-family: ui-monospace, monospace; }
+
+.b2b__status { min-height: 1.5rem; margin-block: 1rem; }
+.b2b__status a { margin-inline-start: 0.5rem; }
+.b2b__status--error,
+.b2b__error { color: var(--b2b-error); }
+.b2b__error { font-size: 0.8rem; margin: 0.25rem 0 0; min-height: 1rem; }
+
+.b2b__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 1.5rem;
+  margin-block: 1.5rem;
+}
+
+.b2b__field label { display: block; font-size: 0.85rem; margin-bottom: 0.35rem; }
+.b2b__field--wide { grid-column: 1 / -1; }
+.b2b__field--checkbox label { display: flex; gap: 0.5rem; align-items: flex-start; }
+
+.b2b__honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.b2b-volume-pricing { padding-block: 0; }
+.b2b-volume-pricing .b2b__table { margin-block: 0.5rem; }
+
+.b2b-context-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  padding: 0.5rem 1.25rem;
+  background: var(--b2b-bar-bg);
+  color: var(--b2b-bar-fg);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.b2b-context-bar a { color: inherit; margin-inline-start: 1rem; }
+
+@media (max-width: 749px) {
+  .b2b { padding-inline: 1rem; }
+  .b2b__grid { grid-template-columns: 1fr; }
+  .b2b__actions .b2b__button { flex: 1 1 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .b2b__button { transition: none; }
+}

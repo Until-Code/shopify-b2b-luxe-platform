@@ -1,0 +1,51 @@
+query CartValidationsGenerateRunInput {
+  buyerJourney {
+    step
+  }
+  localization {
+    language {
+      isoCode
+    }
+  }
+  presentmentCurrencyRate
+  cart {
+    cost {
+      subtotalAmount {
+        amount
+        currencyCode
+      }
+    }
+    buyerIdentity {
+      purchasingCompany {
+        company {
+          name
+          authorizedBrands: metafield(namespace: "b2b", key: "authorized_brands") {
+            jsonValue
+          }
+        }
+        location {
+          name
+          minimumOrderAmount: metafield(namespace: "b2b", key: "minimum_order_amount") {
+            value
+          }
+        }
+      }
+    }
+    lines {
+      quantity
+      merchandise {
+        __typename
+        ... on ProductVariant {
+          sku
+          product {
+            title
+            vendor
+            casePack: metafield(namespace: "b2b", key: "case_pack") {
+              value
+            }
+          }
+        }
+      }
+    }
+  }
+}
